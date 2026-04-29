@@ -507,6 +507,31 @@
       box-shadow: 0 0 0 4px rgba(142, 185, 255, 0.12);
     }
     textarea { min-height: 150px; resize: vertical; }
+    .hp-field {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .form-status {
+      margin: 0;
+      padding: 12px 14px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .form-status[data-state="success"] {
+      border-color: rgba(147, 226, 193, 0.3);
+      background: rgba(147, 226, 193, 0.1);
+      color: #d9fff0;
+    }
+    .form-status[data-state="error"] {
+      border-color: rgba(255, 151, 151, 0.3);
+      background: rgba(255, 151, 151, 0.1);
+      color: #ffdede;
+    }
     .form-note {
       margin: 0;
       color: var(--text-muted);
@@ -991,31 +1016,37 @@
         <article class="contact-card">
           <h3>Solicitar reunión</h3>
           <p>Dejanos un resumen y te contactamos para evaluar alcance, prioridad y enfoque de trabajo.</p>
-          <form>
+          <form action="send-mail.php" method="post" accept-charset="UTF-8">
             <div class="field-row">
               <label>
                 Nombre
-                <input type="text" name="nombre" placeholder="Tu nombre" required>
+                <input type="text" name="nombre" placeholder="Tu nombre" autocomplete="name" required>
               </label>
               <label>
                 Empresa
-                <input type="text" name="empresa" placeholder="Nombre de la empresa">
+                <input type="text" name="empresa" placeholder="Nombre de la empresa" autocomplete="organization">
               </label>
             </div>
             <div class="field-row">
               <label>
                 Email
-                <input type="email" name="email" placeholder="tu@empresa.com" required>
+                <input type="email" name="email" placeholder="tu@empresa.com" autocomplete="email" inputmode="email" required>
               </label>
               <label>
                 Teléfono
-                <input type="tel" name="telefono" placeholder="+54 9 ...">
+                <input type="tel" name="telefono" placeholder="+54 9 ..." autocomplete="tel">
               </label>
             </div>
             <label>
               Necesidad principal
               <textarea name="mensaje" placeholder="Contanos que quieren desarrollar, mejorar o integrar." required></textarea>
             </label>
+            <div class="hp-field" aria-hidden="true">
+              <label>
+                Sitio web
+                <input type="text" name="website" tabindex="-1" autocomplete="off">
+              </label>
+            </div>
             <button class="btn btn-primary" type="submit">Enviar consulta</button>
             <p class="form-note">Este formulario es visual. Si querés, en el siguiente paso lo conecto a email, WhatsApp, Formspree o tu backend.</p>
           </form>
@@ -1051,6 +1082,66 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    const form = document.querySelector('#contacto form');
+    const formNote = form?.querySelector('.form-note');
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("form_status");
+    let statusNode = document.getElementById("form-status");
+
+    if (formNote) {
+      formNote.textContent = "La consulta se enviarÃ¡ por email a Axioma desde el servidor donde se hospede esta web.";
+    }
+
+    if (!statusNode && formNote) {
+      statusNode = document.createElement("p");
+      statusNode.id = "form-status";
+      statusNode.className = "form-status";
+      statusNode.hidden = true;
+      statusNode.setAttribute("aria-live", "polite");
+      form.insertBefore(statusNode, formNote);
+    }
+
+    if (status && statusNode) {
+      const messages = {
+        success: "Tu consulta fue enviada. Axioma te contactarÃ¡ por email a la brevedad.",
+        error: "No se pudo enviar la consulta. RevisÃ¡ los datos e intentÃ¡ nuevamente en unos minutos.",
+        invalid: "Faltan datos obligatorios o el email no es vÃ¡lido. RevisÃ¡ el formulario y volvÃ© a enviarlo."
+      };
+
+      if (messages[status]) {
+        statusNode.hidden = false;
+        statusNode.dataset.state = status === "success" ? "success" : "error";
+        statusNode.textContent = messages[status];
+      }
+
+      params.delete("form_status");
+      const cleanQuery = params.toString();
+      const cleanUrl = `${window.location.pathname}${cleanQuery ? `?${cleanQuery}` : ""}${window.location.hash}`;
+      window.history.replaceState({}, "", cleanUrl);
+    }
+  </script>
+  <script>
+    const formNode = document.querySelector('#contacto form');
+    const formNoteNode = formNode?.querySelector('.form-note');
+    const formStatusNode = document.getElementById('form-status');
+
+    if (formNoteNode) {
+      formNoteNode.textContent = 'La consulta se enviara por email a Axioma desde el servidor donde se hospede esta web.';
+    }
+
+    if (formStatusNode && !formStatusNode.hidden) {
+      const visibleMessages = {
+        success: 'Tu consulta fue enviada. Axioma te contactara por email a la brevedad.',
+        error: 'No se pudo enviar la consulta. Revisa los datos e intenta nuevamente en unos minutos.'
+      };
+
+      if (visibleMessages[formStatusNode.dataset.state]) {
+        formStatusNode.textContent = visibleMessages[formStatusNode.dataset.state];
+      } else {
+        formStatusNode.textContent = 'Faltan datos obligatorios o el email no es valido. Revisa el formulario y vuelve a enviarlo.';
+      }
+    }
   </script>
 </body>
 </html>
