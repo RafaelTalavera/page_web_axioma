@@ -1,247 +1,969 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Axioma Soluciones Integrales</title>
-    <meta name="description" content="Core HTML Project">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Axioma | Desarrollo de software serio para operaciones reales</title>
+  <meta name="description" content="Axioma diseña y desarrolla software a medida, plataformas de gestión e integraciones para empresas que necesitan control, trazabilidad y ejecución confiable.">
+  <meta property="og:title" content="Axioma | Desarrollo de software serio para operaciones reales">
+  <meta property="og:description" content="Software a medida, productos digitales e integraciones para empresas con procesos complejos.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='24' fill='%230d1528'/%3E%3Cpath d='M31 91L64 28l33 63h-15l-18-35-18 35H31Z' fill='%23d9e5ff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #08111f;
+      --surface: rgba(15, 27, 49, 0.78);
+      --line: rgba(178, 194, 225, 0.18);
+      --text: #f3f7ff;
+      --text-soft: #b5c2df;
+      --text-muted: #7f90b5;
+      --accent: #87b7ff;
+      --accent-strong: #c8dcff;
+      --success: #93e2c1;
+      --glow: radial-gradient(circle at top, rgba(135, 183, 255, 0.2), transparent 45%);
+      --hero-glow: radial-gradient(circle at 15% 15%, rgba(135, 183, 255, 0.2), transparent 32%), radial-gradient(circle at 85% 0%, rgba(147, 226, 193, 0.13), transparent 25%), linear-gradient(180deg, #08111f 0%, #091426 52%, #08111f 100%);
+      --shadow: 0 24px 80px rgba(2, 8, 20, 0.45);
+      --radius-xl: 30px;
+      --max-width: 1180px;
+      --font-sans: "Manrope", "Segoe UI", sans-serif;
+      --font-mono: "IBM Plex Mono", Consolas, monospace;
+    }
 
-    <!-- External CSS -->
-    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="vendor/select2/select2.min.css">
-    <link rel="stylesheet" href="vendor/owlcarousel/owl.carousel.min.css">
-    <link rel="stylesheet" href="vendor/lightcase/lightcase.css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Work+Sans:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.min.css">
-    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-    <link href="https://file.myfontastic.com/7vRKgqrN3iFEnLHuqYhYuL/icons.css" rel="stylesheet">
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-sans);
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(6, 13, 24, 0.72), rgba(6, 13, 24, 0.98)),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 120px),
+        var(--hero-glow);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
-    <!-- Modernizr JS for IE8 support of HTML5 elements and media queries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    .container { width: min(100% - 40px, var(--max-width)); margin: 0 auto; }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .skip-link:focus {
+      left: 20px;
+      top: 20px;
+      width: auto;
+      height: auto;
+      padding: 10px 14px;
+      background: #fff;
+      color: #08111f;
+      border-radius: 10px;
+      z-index: 1000;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(135, 183, 255, 0.06);
+      color: var(--accent-strong);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 16px rgba(147, 226, 193, 0.7);
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: rgba(8, 17, 31, 0.72);
+      border-bottom: 1px solid rgba(178, 194, 225, 0.08);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 0;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(200, 220, 255, 0.18);
+      background: linear-gradient(145deg, rgba(135, 183, 255, 0.22), rgba(16, 29, 53, 0.92)), #0b1527;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+    }
+    .brand-mark span { font-weight: 800; font-size: 18px; letter-spacing: 0.08em; }
+    .brand-copy { display: grid; gap: 2px; }
+    .brand-copy strong { font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; }
+    .brand-copy small {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--text); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn:hover,
+    .btn:focus-visible { transform: translateY(-1px); }
+    .btn-primary {
+      color: #08111f;
+      background: linear-gradient(135deg, #dce8ff, #8eb9ff);
+      box-shadow: 0 18px 50px rgba(142, 185, 255, 0.24);
+      font-weight: 700;
+    }
+    .btn-secondary {
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .hero { padding: 54px 0 38px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 34px;
+      align-items: stretch;
+    }
+    .hero-copy,
+    .hero-panel,
+    .section-card,
+    .contact-card,
+    .process-card,
+    .service-card,
+    .stack-card,
+    .case-card,
+    .stat-card,
+    .quote-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(16, 29, 53, 0.8), rgba(11, 20, 37, 0.9));
+      box-shadow: var(--shadow);
+    }
+    .hero-copy {
+      padding: 38px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      inset: auto -12% -24% auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: var(--glow);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .hero h1 {
+      margin: 18px 0;
+      max-width: 11ch;
+      font-size: clamp(3rem, 6vw, 5.7rem);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+    }
+    .hero p {
+      margin: 0;
+      max-width: 58ch;
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      line-height: 1.8;
+      color: var(--text-soft);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+    }
+    .meta-block {
+      padding-top: 16px;
+      border-top: 1px solid rgba(178, 194, 225, 0.12);
+    }
+    .meta-block strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1.6rem;
+      letter-spacing: -0.04em;
+    }
+    .meta-block span { color: var(--text-muted); font-size: 0.95rem; }
+    .hero-panel {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+    .hero-panel-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--text-soft);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(147, 226, 193, 0.08);
+      border: 1px solid rgba(147, 226, 193, 0.18);
+      color: #c9f4e2;
+    }
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+    .system-map {
+      display: grid;
+      gap: 16px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(178, 194, 225, 0.12);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.01)),
+        linear-gradient(135deg, rgba(135, 183, 255, 0.06), rgba(147, 226, 193, 0.04));
+    }
+    .system-node {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(178, 194, 225, 0.12);
+      background: rgba(7, 15, 28, 0.72);
+    }
+    .system-node strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1rem;
+    }
+    .system-node small { color: var(--text-muted); line-height: 1.5; }
+    .node-tag {
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--accent-strong);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .section { padding: 34px 0; }
+    .section-card { padding: 34px; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+    .section-head h2 {
+      margin: 12px 0 0;
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+    .section-head p {
+      margin: 0;
+      max-width: 52ch;
+      color: var(--text-soft);
+      line-height: 1.75;
+    }
+    .stats-grid,
+    .services-grid,
+    .process-grid,
+    .stack-grid,
+    .cases-grid {
+      display: grid;
+      gap: 18px;
+    }
+    .stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .stat-card { padding: 24px; }
+    .stat-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+      letter-spacing: -0.06em;
+    }
+    .stat-card p { margin: 0; color: var(--text-soft); line-height: 1.7; }
+    .services-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .service-card,
+    .process-card,
+    .stack-card,
+    .case-card,
+    .quote-card,
+    .contact-card { padding: 26px; }
+    .service-card h3,
+    .process-card h3,
+    .stack-card h3,
+    .case-card h3,
+    .quote-card h3,
+    .contact-card h3 {
+      margin: 0 0 14px;
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+    }
+    .service-card p,
+    .process-card p,
+    .stack-card p,
+    .case-card p,
+    .quote-card p,
+    .contact-card p {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.75;
+    }
+    .service-label,
+    .case-label {
+      display: inline-block;
+      margin-bottom: 16px;
+      color: var(--accent-strong);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .service-list,
+    .stack-list,
+    .contact-list {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .service-list li,
+    .stack-list li,
+    .contact-list li {
+      color: var(--text-soft);
+      position: relative;
+      padding-left: 18px;
+      line-height: 1.65;
+    }
+    .service-list li::before,
+    .stack-list li::before,
+    .contact-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--success));
+    }
+    .process-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .process-step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(135, 183, 255, 0.26);
+      background: rgba(135, 183, 255, 0.08);
+      color: var(--accent-strong);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .stack-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stack-chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .stack-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-soft);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+    .cases-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .case-result {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(178, 194, 225, 0.12);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent-strong);
+      letter-spacing: 0.04em;
+    }
+    .quote-card {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      align-items: center;
+    }
+    .quote-card blockquote {
+      margin: 0;
+      font-size: clamp(1.3rem, 2.3vw, 1.9rem);
+      line-height: 1.5;
+      letter-spacing: -0.03em;
+    }
+    .quote-card cite {
+      display: block;
+      margin-top: 14px;
+      color: var(--text-muted);
+      font-style: normal;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+    }
+    .contact-card form { display: grid; gap: 14px; }
+    .field-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    label {
+      display: grid;
+      gap: 8px;
+      color: var(--text-soft);
+      font-size: 0.95rem;
+    }
+    input,
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(5, 12, 23, 0.84);
+      color: var(--text);
+      outline: none;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+    input:focus,
+    textarea:focus {
+      border-color: rgba(142, 185, 255, 0.7);
+      box-shadow: 0 0 0 4px rgba(142, 185, 255, 0.12);
+    }
+    textarea { min-height: 150px; resize: vertical; }
+    .form-note {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    footer { padding: 0 0 34px; }
+    .footer-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(8, 17, 31, 0.72);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .footer-links a:hover,
+    .footer-links a:focus-visible { color: var(--text); }
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .contact-grid,
+      .quote-card { grid-template-columns: 1fr; }
+      .stats-grid,
+      .services-grid,
+      .process-grid,
+      .cases-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .nav { flex-direction: column; align-items: stretch; }
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: space-between;
+      }
+      .hero-copy,
+      .hero-panel,
+      .section-card,
+      .service-card,
+      .process-card,
+      .stack-card,
+      .case-card,
+      .quote-card,
+      .contact-card,
+      .stat-card { padding: 22px; }
+      .hero h1 { max-width: none; }
+      .hero-meta,
+      .stats-grid,
+      .services-grid,
+      .process-grid,
+      .stack-grid,
+      .cases-grid,
+      .field-row { grid-template-columns: 1fr; }
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+      .footer-card {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .btn { transition: none; }
+    }
+  </style>
 </head>
-<body data-spy="scroll" data-target="#navbar-nav-header">
-    <div class="boxed-page">
-        <nav id="gtco-header-navbar" class="navbar navbar-expand-lg py-4">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center">
-                    <span>
-                        <img src="img\axioma_logo.ico" alt="Ícono" style="width: 30%;">
-                    </span>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-nav-header"
-                    aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="lnr lnr-menu"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbar-nav-header">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#gtco-who-we-are">Servicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#gtco-features">Tecnologías</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#gtco-section-featurettes">Sobre nosotros</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#gtco-contact">Contacto</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+<body>
+  <a href="#contenido" class="skip-link">Saltar al contenido</a>
 
-        <div class="jumbotron d-flex align-items-center" style="background-image: url(img/central1.png)">
-            <div class="container text-center">
-                <h1 class="display-2 mb-4">Hola, ¡Bienvenido a Axioma!</h1>
-                <p>Tenemos la solución a tu medida.</p>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Axioma, inicio">
+        <div class="brand-mark" aria-hidden="true"><span>AX</span></div>
+        <div class="brand-copy">
+          <strong>Axioma</strong>
+          <small>Software & sistemas de gestión</small>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="#servicios">Servicios</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#tecnologia">Tecnología</a>
+        <a href="#casos">Casos</a>
+        <a href="#contacto">Contacto</a>
+        <a class="btn btn-primary" href="#contacto">Solicitar reunión</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Construimos software con criterio técnico</span>
+          <h1>Software bien pensado. Procesos más claros. Operaciones más simples.</h1>
+          <p>
+            Axioma desarrolla software a medida para empresas que ya no pueden operar con planillas,
+            procesos dispersos o sistemas rígidos. Diseñamos plataformas claras, escalables y
+            mantenibles, con foco en negocio, trazabilidad y ejecución real.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contacto">Hablemos de tu proyecto</a>
+            <a class="btn btn-secondary" href="#servicios">Ver capacidades</a>
+          </div>
+          <div class="hero-meta" aria-label="Indicadores de Axioma">
+            <div class="meta-block">
+              <strong>End-to-end</strong>
+              <span>Producto, UX, desarrollo e integración en un solo equipo.</span>
             </div>
+            <div class="meta-block">
+              <strong>B2B real</strong>
+              <span>Sistemas pensados para operaciones, compliance y gestión.</span>
+            </div>
+            <div class="meta-block">
+              <strong>Largo plazo</strong>
+              <span>Arquitectura limpia para crecer sin rehacer cada seis meses.</span>
+            </div>
+          </div>
         </div>
 
-        <section id="gtco-who-we-are" class="bg-white">
-            <div class="container">
-                <div class="section-content">
-                    <div class="title-wrap">
-                        <h2 class="section-title">El mejor software para la satisfacción de tus necesidades</h2>
-                        <p class="section-sub-title">Nos respaldan años de trabajo en gestión a medida para la creación
-                            de software integral</p>
-                    </div>
+        <aside class="hero-panel" aria-label="Resumen operativo">
+          <div class="hero-panel-top">
+            <span>Enfoque de entrega</span>
+            <span class="status">Disponibilidad para nuevos proyectos</span>
+          </div>
 
-                    <div class="row text-center">
-                        <div class="col-md-4 col-sm-6">
-                            <img class="rounded-circle" src="icons/animat-checkmark.gif" alt="Generic placeholder image"
-                                width="140" height="140">
-                            <h5 class="mb-4">Codigo simple y limpio</h5>
-                            <p>Trabajamos con metodologías ágiles y modernas bajo los más altos estándares que aseguran
-                                un código simple, limpio y robusto.</p>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <img class="rounded-circle" src="icons/animat-customize.gif" alt="Generic placeholder image"
-                                width="140" height="140">
-                            <h5 class="mb-4">Fácil de personalizar</h5>
-                            <p>Nuestras aplicaciones son realizadas con los frameworks más utilizados, lo que asegura
-                                facilidad a la hora de personalizar y ampliar.</p>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <img class="rounded-circle" src="icons/animat-responsive.gif"
-                                alt="Generic placeholder image" width="140" height="140">
-                            <h5 class="mb-4">Fully Responsive</h5>
-                            <p>Desarrollamos con adaptabilidad a los dispositivos donde se visualicen, dandole
-                                versatilidad a nuestras aplicaciones.</p>
-                        </div>
-                    </div>
-                </div>
+          <div class="system-map">
+            <div class="system-node">
+              <div>
+                <strong>Software a medida</strong>
+                <small>Aplicaciones web, paneles internos, portales de clientes y herramientas operativas.</small>
+              </div>
+              <span class="node-tag">Build</span>
             </div>
-        </section>
+            <div class="system-node">
+              <div>
+                <strong>Integraciones y automatización</strong>
+                <small>Conectamos ERP, CRM, BI, APIs externas y flujos manuales que hoy frenan al equipo.</small>
+              </div>
+              <span class="node-tag">Sync</span>
+            </div>
+            <div class="system-node">
+              <div>
+                <strong>Modernización de productos</strong>
+                <small>Refactor técnico, rediseño visual y mejora de performance sobre sistemas existentes.</small>
+              </div>
+              <span class="node-tag">Scale</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-        <section id="gtco-features" class="bg-white">
-            <div class="container">
-                <div class="section-content">
-                    <div class="title-wrap">
-                        <h2 class="section-title">Las tecnologías con las que trabajamos</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 features-holder">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                                    <div class="my-4">
-                                        <img src="img/java.ico" alt="Imagen de Java">
-                                    </div>
-                                    <h4>JAVA</h4>
-                                    <p>Asegurando un backend robusto y fácil de mantener.</p>
-                                </div>
-                                <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                                    <div class="my-4">
-                                        <img src="img/mysql.ico" alt="Imagen de Java">
-                                    </div>
-                                    <h4>MySql</h4>
-                                    <p>Uno de los motores de base de datos más confiables y utilizados en el mundo.</p>
-                                </div>
-                                <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                                    <div class="my-4">
-                                        <img src="img/spring_logo.ico" alt="Logo Spring boot">
-                                    </div>
-                                    <h4>Spring Boot</h4>
-                                    <p>Desarrollo rápido, configuración simplificada y soporte amplio para aplicaciones
-                                        Java.</p>
-                                </div>
-                                <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                                    <div class="my-4">
-                                        <img src="img/git_icon.ico" alt="Logo GIT">
-                                    </div>
-                                    <h4>GIT</h4>
-                                    <p>Control de versiones, colaboración eficiente, seguimiento de cambios.</p>
-                                </div>
-                                <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                                    <div class="my-4">
-                                        <img src="img/docker_icon.ico" alt="Logo Docker">
-                                    </div>
-                                    <h4>Docker</h4>
-                                    <p>Portabilidad de aplicaciones, aislamiento, despliegue eficiente.</p>
-                                </div>
-                                <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                                    <div class="my-4">
-                                        <img src="img/angular_logo.ico" alt="Logo Angular">
-                                    </div>
-                                    <h4>Angular</h4>
-                                    <p>Desarrollo web, SPA, estructura modular y alto rendimiento.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section class="section">
+      <div class="container section-card">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Lo que resolvemos</span>
+            <h2>Menos fricción interna. Más control sobre el negocio.</h2>
+          </div>
+          <p>
+            La mayoría de los problemas no empiezan en el código. Empiezan cuando la operación crece y
+            las herramientas ya no acompañan. Ahí es donde Axioma entra a ordenar, simplificar y construir.
+          </p>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card">
+            <strong>Procesos</strong>
+            <p>Transformamos circuitos manuales en flujos digitales trazables y medibles.</p>
+          </article>
+          <article class="stat-card">
+            <strong>Datos</strong>
+            <p>Unificamos información dispersa para que las decisiones no dependan de WhatsApp ni Excel.</p>
+          </article>
+          <article class="stat-card">
+            <strong>Equipos</strong>
+            <p>Diseñamos interfaces sobrias y claras para adopción rápida en áreas operativas.</p>
+          </article>
+          <article class="stat-card">
+            <strong>Escala</strong>
+            <p>Preparamos la base técnica para crecer con menos deuda y menos retrabajo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-        <section id="gtco-section-featurettes" class="featurettes bg-white">
-            <div class="container">
-                <div class="section-content">
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <div class="title-wrap">
-                                <h2 class="section-title"><b>Somos Desarrolladores</b> por naturaleza,<br> entendemos la vida como un sistema</h2>
-                                <p class="section-sub-title">Axioma verdades innegables que impulsan el desarrollo.</p>
-                            </div>
-                            <div class="featurettes-wrap text-left mb-4">
-                                <div class="row featurettes-item">
-                                    <div class="col-md-4 offset-md-2 col-sm-6">
-                                        <div class="my-5"></div>
-                                        <h4 class="mb-4">Soy Rafael Talavera socio fundador de Axioma</h4>
-                                        <p>Tengo amplia experiencia en liderazgo y en el desarrollo de herramientas para sistemas 
-                                            de gestión en áreas como seguridad, salud, medio ambiente, calidad y continuidad de negocio. 
-                                            Formo parte de Axioma, ofreciendo soluciones para tus necesidades, para que podamos trabajar 
-                                            juntos.</p>
-                                    </div>
-                                    <div class="col-md-4 offset-md-right-2 col-sm-6">
-                                        <img class="my-5"
-                                            src="https://avatars.githubusercontent.com/u/125708112?s=400&u=7b925bf9203df0cba6a3ba001910bafb6c4e5cda&v=4"
-                                            alt="imagen Rafael" style="border-radius: 10px;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section class="section" id="servicios">
+      <div class="container section-card">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Servicios</span>
+            <h2>Una desarrolladora orientada a producto, no solo a tickets.</h2>
+          </div>
+          <p>
+            Tomamos proyectos nuevos, refactorizaciones complejas y evoluciones de plataformas que ya están en producción.
+            El objetivo no es sumar pantallas. Es mejorar cómo funciona el negocio detrás de esas pantallas.
+          </p>
+        </div>
 
-        <section id="gtco-contact" class="bg-white">
-            <div class="container">
-                <div class="section-content">
-                    <div class="title-wrap">
-                        <h2 class="section-title">Contactanos y te responderemos</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 features-holder">
-                            <div class="row justify-content-center">
-                                <div class="col-md-4 col-sm-6 feature-item item mb-3 mb-3 text-center">
-                                    <div class="my-4">
-                                        <a href="https://www.linkedin.com/in/rafael-fernando-talavera-7b6b794a/">
-                                            <img src="img/linkedin_icon.ico" alt="Imagen de LinkedIn">
-                                        </a>
-                                    </div>
-                                    <p>Por LinkedIn.</p>
-                                </div>
-                                <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                                    <div class="my-4">
-                                        <a href="mailto:rtalavera@live.com.ar">
-                                            <img src="img/Email1.ico" alt="imagen email">
-                                        </a>
-                                    </div>
-                                    <p>Por correo electrónico</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="services-grid">
+          <article class="service-card">
+            <span class="service-label">01 / Productos digitales</span>
+            <h3>Plataformas web y software a medida</h3>
+            <p>Diseño y desarrollo de sistemas internos, backoffices, portales B2B y aplicaciones orientadas a operación.</p>
+            <ul class="service-list">
+              <li>Módulos administrativos y operativos</li>
+              <li>Dashboards, roles y trazabilidad</li>
+              <li>Arquitectura pensada para evolución continua</li>
+            </ul>
+          </article>
 
-        <footer class="mastfoot mb-3 bg-white py-4 border-top">
-            <div class="inner container">
-                <div class="row">
-                    <div class="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
-                        <p class="mb-0">&copy; 2023 Axioma. Todos los derechos reservados. Diseño por Rafael Talavera.</p>
-                    </div>
-                    <div class="col-md-6">
-                        <nav class="nav nav-mastfoot justify-content-md-end justify-content-center">
-                            <a class="nav-link" href="https://www.linkedin.com/in/rafael-fernando-talavera-7b6b794a/">
-                                <i class="icon-linkedin"></i>
-                            </a>
-                        </nav>
-                    </div>
-                </div>
+          <article class="service-card">
+            <span class="service-label">02 / Integración</span>
+            <h3>Automatización y conexión entre sistemas</h3>
+            <p>Reducimos trabajo manual conectando fuentes de datos, procesos comerciales, circuitos de aprobación y servicios externos.</p>
+            <ul class="service-list">
+              <li>Integración con APIs, CRMs y ERPs</li>
+              <li>Sincronización de catálogos, estados y documentos</li>
+              <li>Alertas, jobs y orquestación de procesos</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <span class="service-label">03 / Evolución</span>
+            <h3>Refactor y rediseño de productos existentes</h3>
+            <p>Cuando el sistema ya existe, trabajamos sobre usabilidad, estructura, deuda técnica y performance sin romper la operación.</p>
+            <ul class="service-list">
+              <li>Revisión funcional y técnica</li>
+              <li>Rediseño visual con foco corporativo</li>
+              <li>Mejoras iterativas con riesgo controlado</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="proceso">
+      <div class="container section-card">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Proceso</span>
+            <h2>Un método simple para proyectos complejos.</h2>
+          </div>
+          <p>
+            Priorizamos claridad de alcance, decisiones técnicas justificadas y entregas que puedan ponerse en marcha sin drama.
+          </p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-card">
+            <span class="process-step">01</span>
+            <h3>Diagnóstico</h3>
+            <p>Relevamos objetivos, restricciones, sistemas existentes y puntos de fricción del negocio.</p>
+          </article>
+          <article class="process-card">
+            <span class="process-step">02</span>
+            <h3>Definición</h3>
+            <p>Traducimos necesidades en alcance, arquitectura inicial, backlog y criterio de prioridad.</p>
+          </article>
+          <article class="process-card">
+            <span class="process-step">03</span>
+            <h3>Construcción</h3>
+            <p>Desarrollamos por etapas con validaciones frecuentes, evitando grandes bloques opacos.</p>
+          </article>
+          <article class="process-card">
+            <span class="process-step">04</span>
+            <h3>Evolución</h3>
+            <p>Medimos, corregimos y escalamos sobre una base mantenible, no improvisada.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tecnologia">
+      <div class="container section-card">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Tecnología</span>
+            <h2>Elegimos stack por contexto, no por moda.</h2>
+          </div>
+          <p>
+            La decisión técnica correcta depende del problema, del equipo y del horizonte del producto. Trabajamos con criterio, documentación y foco en mantenibilidad.
+          </p>
+        </div>
+
+        <div class="stack-grid">
+          <article class="stack-card">
+            <h3>Frontend y experiencia</h3>
+            <p>Interfaces claras, consistentes y rápidas para equipos que necesitan operar sin curva innecesaria.</p>
+            <div class="stack-chip-row" aria-label="Tecnologías de frontend">
+              <span class="stack-chip">HTML</span>
+              <span class="stack-chip">CSS</span>
+              <span class="stack-chip">JavaScript</span>
+              <span class="stack-chip">React</span>
+              <span class="stack-chip">Diseño UI</span>
             </div>
-        </footer>
+            <ul class="stack-list">
+              <li>Sistemas visuales sobrios y profesionales</li>
+              <li>Componentes escalables y ordenados</li>
+              <li>Performance y responsive como base, no como extra</li>
+            </ul>
+          </article>
+
+          <article class="stack-card">
+            <h3>Backend, datos e integraciones</h3>
+            <p>Servicios robustos para reglas de negocio, automatización, seguridad y comunicación entre plataformas.</p>
+            <div class="stack-chip-row" aria-label="Tecnologías de backend">
+              <span class="stack-chip">APIs</span>
+              <span class="stack-chip">Bases de datos</span>
+              <span class="stack-chip">Automatización</span>
+              <span class="stack-chip">Integraciones</span>
+              <span class="stack-chip">Arquitectura</span>
+            </div>
+            <ul class="stack-list">
+              <li>Modelado orientado a operación y trazabilidad</li>
+              <li>Conectividad con sistemas existentes</li>
+              <li>Despliegues pensados para continuidad y evolución</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="casos">
+      <div class="container section-card">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Aplicación</span>
+            <h2>Casos típicos donde Axioma agrega valor rápido.</h2>
+          </div>
+          <p>
+            No vendemos una plantilla genérica. Trabajamos sobre problemas concretos, con objetivos claros y métricas que el cliente pueda defender internamente.
+          </p>
+        </div>
+
+        <div class="cases-grid">
+          <article class="case-card">
+            <span class="case-label">Operaciones</span>
+            <h3>Sistema interno para gestión de procesos</h3>
+            <p>Centralización de tareas, aprobaciones, seguimiento y documentación para áreas que hoy trabajan en paralelo sin visibilidad común.</p>
+            <div class="case-result">Resultado esperado: menos tiempo de coordinación, más trazabilidad.</div>
+          </article>
+
+          <article class="case-card">
+            <span class="case-label">Comercial</span>
+            <h3>Portal o herramienta para clientes y equipos</h3>
+            <p>Experiencias digitales que ordenan consultas, operaciones, estados y documentos sin depender del intercambio manual.</p>
+            <div class="case-result">Resultado esperado: mejor servicio con menos carga operativa.</div>
+          </article>
+
+          <article class="case-card">
+            <span class="case-label">Modernización</span>
+            <h3>Refactor visual y técnico de una plataforma existente</h3>
+            <p>Actualización del producto sin perder conocimiento acumulado ni interrumpir el uso de quienes dependen del sistema todos los días.</p>
+            <div class="case-result">Resultado esperado: producto más sólido, claro y sostenible.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container quote-card">
+        <div>
+          <span class="eyebrow">Criterio de trabajo</span>
+          <blockquote>
+            Diseñamos para que el software se vea serio, funcione bien y siga teniendo sentido cuando el negocio cambie.
+          </blockquote>
+          <cite>Axioma - Desarrollo de software para entornos reales</cite>
+        </div>
+        <div class="contact-card">
+          <h3>Qué vas a encontrar en Axioma</h3>
+          <ul class="contact-list">
+            <li>Comunicación clara sobre alcance, tiempos y decisiones técnicas</li>
+            <li>Diseño visual alineado con una marca corporativa y madura</li>
+            <li>Implementación con foco en estabilidad y mantenimiento</li>
+            <li>Capacidad de construir desde cero o mejorar lo que ya existe</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contacto">
+      <div class="container contact-grid">
+        <article class="contact-card">
+          <span class="eyebrow">Contacto</span>
+          <h3>Conversemos sobre lo que hoy está frenando a tu equipo.</h3>
+          <p>
+            Si ya tienen una necesidad detectada, una plataforma por rehacer o un proceso que pide software propio,
+            Axioma puede ayudar a definir el siguiente paso con criterio técnico y visión de negocio.
+          </p>
+          <ul class="contact-list">
+            <li>Proyectos nuevos y evolución de sistemas existentes</li>
+            <li>Software operativo, administrativo o comercial</li>
+            <li>Integraciones, automatización y rediseño de producto</li>
+          </ul>
+        </article>
+
+        <article class="contact-card">
+          <h3>Solicitar reunión</h3>
+          <p>Dejanos un resumen y te contactamos para evaluar alcance, prioridad y enfoque de trabajo.</p>
+          <form>
+            <div class="field-row">
+              <label>
+                Nombre
+                <input type="text" name="nombre" placeholder="Tu nombre" required>
+              </label>
+              <label>
+                Empresa
+                <input type="text" name="empresa" placeholder="Nombre de la empresa">
+              </label>
+            </div>
+            <div class="field-row">
+              <label>
+                Email
+                <input type="email" name="email" placeholder="tu@empresa.com" required>
+              </label>
+              <label>
+                Teléfono
+                <input type="tel" name="telefono" placeholder="+54 9 ...">
+              </label>
+            </div>
+            <label>
+              Necesidad principal
+              <textarea name="mensaje" placeholder="Contanos que quieren desarrollar, mejorar o integrar." required></textarea>
+            </label>
+            <button class="btn btn-primary" type="submit">Enviar consulta</button>
+            <p class="form-note">Este formulario es visual. Si querés, en el siguiente paso lo conecto a email, WhatsApp, Formspree o tu backend.</p>
+          </form>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-card">
+      <div>&copy; <span id="year"></span> Axioma. Desarrollo de software, productos e integraciones.</div>
+      <div class="footer-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#tecnologia">Tecnología</a>
+        <a href="#contacto">Contacto</a>
+      </div>
     </div>
+  </footer>
 
-    <!-- External JS -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="vendor/bootstrap/popper.min.js"></script>
-    <script src="vendor/bootstrap/bootstrap.min.js"></script>
-    <script src="vendor/select2/select2.min.js "></script>
-    <script src="vendor/owlcarousel/owl.carousel.min.js"></script>
-    <script src="vendor/isotope/isotope.min.js"></script>
-    <script src="vendor/lightcase/lightcase.js"></script>
-    <script src="vendor/waypoints/waypoint.min.js"></script>
-    <script src="vendor/countTo/jquery.countTo.js"></script>
-
-    <!-- Main JS -->
-    <script src="js/app.min.js "></script>
-    <script src="//localhost:35729/livereload.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
